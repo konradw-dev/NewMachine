@@ -4,7 +4,9 @@
 #
 # Instructions:
 # 1. Download this file to any location **other than** $HOME/Documents/WindowsPowerShell
-# 2. ./FirstInstall.ps1
+#       Invoke-WebRequest -Uri https://raw.githubusercontent.com/BrassStack/NewMachine/master/FirstInstall.ps1 -Method Get -OutFile FirstInstall.ps1
+# 2. Execute it
+#       ./FirstInstall.ps1
 # ===================================================
 
 [CmdletBinding()]
@@ -163,9 +165,9 @@ try {
         $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
     }
 
-    # Clone PowerShell v5 profile if this file is not in it yet
+    # Clone PowerShell v5 profile if profile workspace is not in it yet
     $ps5path = "$HOME\Documents\WindowsPowerShell"
-    if ( -not (Test-Path $ps5path\FirstInstall.ps1) ) {
+    if ( -not (Test-Path $ps5path\My-Profile.code-workspace) ) {
         Write-Host -ForegroundColor cyan "`nCloning to $ps5path`n"
         Set-Location $HOME
         Remove-Item -Force -Recurse $ps5path -ErrorAction SilentlyContinue
