@@ -1,9 +1,9 @@
 # ===================================================
-# On a new machine you may need to run:
+# On a new machine you will need to run:
 # Set-ExecutionPolicy RemoteSigned
 #
 # Instructions:
-# 1. Download this file to any location **other than** $HOME/Documents/WindowsPowerShell
+# 1. Download this file
 #       Invoke-WebRequest -Uri https://raw.githubusercontent.com/BrassStack/NewMachine/master/FirstInstall.ps1 -Method Get -OutFile FirstInstall.ps1
 # 2. Execute it
 #       ./FirstInstall.ps1
