@@ -292,6 +292,31 @@ try {
     ./Backup/EqualizerAPO64-1.3.exe
     Copy-Item ./Backup/EQAPOconfig.txt "C:\Program Files\EqualizerAPO\config\config.txt" -Verbose -Force
 
+    # Create some directories
+    if ( (Test-Path "$env:OneDrive\Documents") -and -not (Test-Path "$HOME\Documents") ) {
+        Write-Host -ForegroundColor cyan "`nAdding short paths to libraries...`n"
+        New-Item -ItemType Junction -Path "$HOME\Documents" -Target "$env:OneDrive\Documents" -ErrorAction SilentlyContinue
+        New-Item -ItemType Junction -Path "$HOME\Pictures" -Target "$env:OneDrive\Pictures" -ErrorAction SilentlyContinue
+        New-Item -ItemType Junction -Path "$HOME\Desktop" -Target "$env:OneDrive\Desktop" -ErrorAction SilentlyContinue
+    }
+    New-Item -ItemType Directory "$HOME\Source" -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory "$HOME\Source\Demos" -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory "$HOME\Source\Github" -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory "$HOME\Source\Libraries" -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory "$HOME\Source\PowerShell" -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory "$HOME\Source\Utilities" -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory "$HOME\Source\WebApps" -ErrorAction SilentlyContinue
+    
+    Write-Host -ForegroundColor cyan "`nAdding Projects library...`n"
+    Copy-Item "./Backup/Projects.library-ms" "$HOME\AppData\Roaming\Microsoft\Windows\Libraries\" -Verbose -ErrorAction Continue
+    
+    # Import scheduled task xmls
+    Write-Host -ForegroundColor cyan "`nRestoring scheduled tasks...`n" 
+    $un = (whoami)
+    Register-ScheduledTask -xml (Get-Content './Backup/Scheduled Tasks/Start AHK.xml' | Out-String) -TaskName "Start AHK" -TaskPath "\" -User $un -Force
+    Register-ScheduledTask -xml (Get-Content './Backup/Scheduled Tasks/Restore Windows after reboot.xml' | Out-String) -TaskName "Restore Windows after reboot" -TaskPath "\" -User $un -Force
+    Register-ScheduledTask -xml (Get-Content './Backup/Scheduled Tasks/Save Open Windows on Restart event.xml' | Out-String) -TaskName "Save Open Windows on Restart event" -TaskPath "\" -User $un -Force
+
 
     # ===================================================
     # Add IWU repo and set up work-specific items
