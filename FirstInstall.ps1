@@ -108,12 +108,12 @@ try {
     
     # Make sure default repo is trusted and install useful modules
     Write-Host -ForegroundColor cyan "`nSetting up Windows PowerShell ...`n"
-    Get-NetConnectionProfile -NetworkCategory Public | Set-NetConnectionProfile -NetworkCategory Private
+    Get-NetConnectionProfile -NetworkCategory Public -ErrorAction SilentlyContinue | Set-NetConnectionProfile -NetworkCategory Private -ErrorAction SilentlyContinue
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
     Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Scope AllUsers -ForceBootstrap
     Install-Module posh-git -Scope AllUsers -Force
     Install-Module PowerShellGet -Scope AllUsers -Force
-    Get-WindowsCapability -Online -Name Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0 | Add-WindowsCapability -Online
+    Get-WindowsCapability -Online -Name Rsat.ActiveDirectory* | Add-WindowsCapability -Online -ErrorAction SilentlyContinue
 
     Enable-PSRemoting
     Enable-WSManCredSSP -Role Client -DelegateComputer * -Force
