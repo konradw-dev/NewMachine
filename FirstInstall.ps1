@@ -328,7 +328,12 @@ try {
     # Final Messages and launch VS Code with profile
     # ===================================================
     Write-Host -ForegroundColor cyan "`nInstalling VS Code...`n"
-    winget install Microsoft.VisualStudioCode --scope machine
+    if ( $Chocolatey ) {
+        choco install vscode --limitoutput
+    }
+    else {
+        winget install Microsoft.VisualStudioCode --scope machine
+    }
     if ( -not $? ) {
         throw "Installing VS Code failed"
     }
