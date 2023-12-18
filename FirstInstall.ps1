@@ -352,7 +352,7 @@ try {
 
     if ( Test-Path "\\iwufiles\common\uit\datateam" ) {
         if ( $Chocolatey ) {
-            choco install choco-work.confdig
+            choco install choco-work.config
         }
         else {
             winget import -i .\winget.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements
