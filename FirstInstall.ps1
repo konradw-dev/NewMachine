@@ -233,6 +233,9 @@ try {
     # Set keyboard repeat delay to zero
     Set-ItemProperty "HKCU:\Control Panel\Keyboard\" -Name KeyboardDelay -Value 0
 
+    # Set Taskbar Jumplist items to 20
+    Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" -Name "JumpListItems_Maximum" -Type DWord -Value 20
+
     # Set recycle bin drive space usage
     $volume = mountvol C:\ /L 
     $guid = [regex]::Matches( $volume, '{([-0-9A-F].*?)}' )
@@ -240,7 +243,7 @@ try {
     Set-ItemProperty -Path $regKey -Name "MaxCapacity" -Type DWord -Value 1024
     
     # Turn on Developer mode
-    reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v "AllowDevelopmentWithoutDevLicense" /d "1"
+    Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock\" -Name "AllowDevelopmentWithoutDevLicense" -Type DWord -Value 1
 
     # Tweaks from https://github.com/Disassembler0/Win10-Initial-Setup-Script
     Import-Module ./Tweaks.psm1
@@ -319,7 +322,7 @@ try {
 
 
     # ===================================================
-    # Add IWU repo and set up work-specific items
+    # Set up work-specific items
     # ===================================================
     ./Install-WorkItems.ps1
 
