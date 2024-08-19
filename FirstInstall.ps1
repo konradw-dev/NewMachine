@@ -12,7 +12,8 @@
 [CmdletBinding()]
 param (
     [switch] $Force,
-    [switch] $Chocolatey
+    [switch] $Chocolatey,
+    [switch] $Work
 )
 
 # ===================================================
@@ -353,12 +354,12 @@ try {
     # Install applications
     # ===================================================
 
-    if ( Test-Path "\\iwufiles\common\uit\datateam" ) {
+    if ( $Work ) {
         if ( $Chocolatey ) {
             choco install choco-work.config
         }
         else {
-            winget import -i .\winget.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements
+            winget import -i .\winget.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements --ignore-unavailable --ignore-versions
         }
     }
     else {
@@ -366,13 +367,15 @@ try {
             choco install choco-home.config
         }
         else {
-            winget import -i .\winget.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements
+            winget import -i .\winget.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements --ignore-unavailable --ignore-versions
         }
     }
 
-    Write-Host -ForegroundColor Cyan "Now installing VS Extensions"
-    Wait-KeyTimeout
-    ./Install-VsExtensions.ps1
+    if ( Test-Path ./Install-VsExtensions.ps1 ) {
+        Write-Host -ForegroundColor Cyan "Now installing VS Extensions"
+        Wait-KeyTimeout
+        ./Install-VsExtensions.ps1
+    }
 }
 catch {
     Write-Host -ForegroundColor red "Aborted:"
