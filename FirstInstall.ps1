@@ -359,7 +359,7 @@ try {
             choco install choco-work.config
         }
         else {
-            winget import -i .\winget.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements --ignore-unavailable --ignore-versions
+            winget import -i .\winget-work.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements --ignore-unavailable --ignore-versions
         }
     }
     else {
@@ -367,7 +367,7 @@ try {
             choco install choco-home.config
         }
         else {
-            winget import -i .\winget.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements --ignore-unavailable --ignore-versions
+            winget import -i .\winget-home.pkgs.json --disable-interactivity --accept-package-agreements --accept-source-agreements --ignore-unavailable --ignore-versions
         }
     }
 
