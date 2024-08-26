@@ -246,6 +246,27 @@ try {
     # Turn on Developer mode
     Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock\" -Name "AllowDevelopmentWithoutDevLicense" -Type DWord -Value 1
 
+    # New registry edits for Windows 11
+
+    Write-Host -ForegroundColor white "Disabling Windows snipping tool hijack of PrintScreen key..."
+    Set-ItemProperty -Path "HKCU:\Control Panel\Keyboard" -Name "PrintScreenKeyForSnippingEnabled" -Type DWord -Value 0
+
+    Write-Host -ForegroundColor white "Disabling the file explorer 'quick' right-click context menu..."
+    New-Item -Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" -Type String -Value ""
+    New-Item -Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Type String -Value ""
+
+    Write-Host -ForegroundColor white "Removing Home and Gallery links from above file explorer quick access..."
+    
+    # Hide 'Home'
+    New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}" -Type String -Value "CLSID_MSGraphHomeFolder"
+    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}" -Name "HiddenByDefault" -Type DWord -Value 1
+    
+    # Hide 'Gallery'
+    New-Item -Path "HKCU:\Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}" -Type String -Value ""
+    Set-ItemProperty -Path "HKCU:\Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}" -Name "System.IsPinnedToNameSpaceTree" -Type DWord -Value 0
+    # For some other systems / Win 11 versions, this is needed to hide 'Gallery' instead:
+    ### Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace_41040327]" -Force
+
     # Tweaks from https://github.com/Disassembler0/Win10-Initial-Setup-Script
     Import-Module ./Tweaks.psm1
     DisableAeroShake
