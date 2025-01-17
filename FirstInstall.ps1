@@ -392,6 +392,8 @@ try {
         }
     }
 
+    oh-my-posh font install CascadiaCode
+
     if ( Test-Path ./Install-VsExtensions.ps1 ) {
         Write-Host -ForegroundColor Cyan "Now installing VS Extensions"
         Wait-KeyTimeout
