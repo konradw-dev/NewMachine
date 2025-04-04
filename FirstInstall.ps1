@@ -4,7 +4,7 @@
 #
 # Instructions:
 # 1. Download this file
-#       Invoke-WebRequest -Uri https://raw.githubusercontent.com/BrassStack/NewMachine/master/FirstInstall.ps1 -Method Get -OutFile FirstInstall.ps1
+#       Invoke-WebRequest -Uri https://raw.githubusercontent.com/konradw-dev/NewMachine/master/FirstInstall.ps1 -Method Get -OutFile FirstInstall.ps1
 # 2. Execute it
 #       ./FirstInstall.ps1
 # ===================================================
@@ -172,7 +172,7 @@ try {
         Write-Host -ForegroundColor cyan "`nCloning to $ps5path`n"
         Set-Location $HOME
         Remove-Item -Force -Recurse $ps5path -ErrorAction SilentlyContinue
-        git clone https://github.com/BrassStack/PowerShell.git $ps5path
+        git clone https://github.com/konradw-dev/PowerShell.git $ps5path
     }
     else {
         Write-Host -ForegroundColor white "`nSkipped existing $ps5path"
@@ -305,10 +305,10 @@ try {
     RestoreItem $ps7path "git worktree add $ps7path v7"
 
     # Clone gitconfig
-    RestoreItem $gitpath "git clone https://github.com/BrassStack/gitconfig.git $gitpath"
+    RestoreItem $gitpath "git clone https://github.com/konradw-dev/gitconfig.git $gitpath"
 
     # Clone autohotkey
-    RestoreItem $ahkpath "git clone https://github.com/BrassStack/AutoHotkey.git $ahkpath"
+    RestoreItem $ahkpath "git clone https://github.com/konradw-dev/AutoHotkey.git $ahkpath"
 
     # Restore Equalizer APO config
     Write-Host -ForegroundColor cyan "`nRestoring EqualizerAPO config...`n"
